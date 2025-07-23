@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import PollResult from "./PoleResults";
 
 // Connect to backend server
-const socket = io("https://interview-io-9ppy.onrender.com");
+// const socket = io("https://interview-io-9ppy.onrender.com");
 //const socket=io("http://localhost:5000");
+const socket = io("https://interview-io-jthf.onrender.com");
 
 
 export default function StudentPage() {
