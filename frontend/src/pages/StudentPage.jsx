@@ -5,8 +5,8 @@ import PollResult from "./PoleResults";
 
 // Connect to backend server
 
-const socket=io("http://localhost:5000");
-//const socket = io("https://interview-io-jthf.onrender.com");
+//const socket=io("http://localhost:5000");
+const socket = io("https://interview-io-ub76.onrender.com");
 
 
 export default function StudentPage() {
