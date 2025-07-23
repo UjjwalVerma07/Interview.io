@@ -4,7 +4,6 @@ import { io } from "socket.io-client";
 import PollResults from "./PoleResults";
 import { useNavigate } from "react-router-dom";
 
-// const socket = io("https://interview-io-9ppy.onrender.com");
 //const socket = io("http://localhost:5000");
 const socket = io("https://interview-io-jthf.onrender.com");
 export default function TeacherPage() {
