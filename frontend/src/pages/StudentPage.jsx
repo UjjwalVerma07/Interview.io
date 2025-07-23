@@ -5,6 +5,7 @@ import PollResult from "./PoleResults";
 
 // Connect to backend server
 const socket = io("https://interview-io-9ppy.onrender.com");
+//const socket=io("http://localhost:5000");
 
 
 export default function StudentPage() {
@@ -52,7 +53,9 @@ const [showResults, setShowResults] = useState(false);
 // });
 
 socket.on("participants_list", (data) => {
+  console.log(data)
   setParticipants(data);
+  console.log(participants)
 });
 
 socket.on("kicked", () => {
@@ -74,6 +77,7 @@ socket.on("chat_message", (msg) => {
 
 
     return () => {
+
   socket.off("new_poll");
   socket.off("live_results");
   socket.off("poll_complete");

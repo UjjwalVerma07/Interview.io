@@ -5,8 +5,7 @@ import PollResults from "./PoleResults";
 import { useNavigate } from "react-router-dom";
 
 const socket = io("https://interview-io-9ppy.onrender.com");
-
-
+//const socket = io("http://localhost:5000");
 export default function TeacherPage() {
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState([
@@ -27,6 +26,10 @@ const navigate=useNavigate();
 
 
 useEffect(() => {
+ // Teacher joins — send current participants list
+socket.on('join_teacher', () => {
+  socket.emit('participants_list', participants);
+});
   // New poll started
   socket.on("new_poll", (data) => {
     setCanCreatePoll(false);
@@ -54,18 +57,20 @@ useEffect(() => {
 
   // Participants list
   socket.on("participants_list", (list) => {
+    console.log("Received participants list:", list);
     setParticipants(list);
   });
 
   // Cleanup on component unmount
   return () => {
+
     socket.off("new_poll");
     socket.off("poll_complete");
     socket.off("live_results");
     socket.off("chat_message");
     socket.off("participants_list");
   };
-}, []);
+},);
 
 
   const handleOptionTextChange = (index, value) => {

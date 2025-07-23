@@ -21,6 +21,13 @@ function handleSocketEvents(io, socket) {
     }
   });
 
+  // Teacher joins — send current participants list
+socket.on('join_teacher', () => {
+  socket.emit('participants_list', participants);
+});
+
+
+
   socket.on('kick_participant', (name) => {
   const targetSocketId = nameToSocketMap[name];
   if (targetSocketId) {
