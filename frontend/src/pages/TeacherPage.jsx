@@ -4,8 +4,8 @@ import { io } from "socket.io-client";
 import PollResults from "./PoleResults";
 import { useNavigate } from "react-router-dom";
 
-//const socket = io("http://localhost:5000");
-const socket = io("https://interview-io-jthf.onrender.com");
+const socket = io("http://localhost:5000");
+//const socket = io("https://interview-io-jthf.onrender.com");
 export default function TeacherPage() {
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState([
@@ -27,9 +27,12 @@ const navigate=useNavigate();
 
 useEffect(() => {
  // Teacher joins — send current participants list
-socket.on('join_teacher', () => {
-  socket.emit('participants_list', participants);
-});
+socket.emit('join_teacher');
+ socket.on("participants_list", (list) => {
+    console.log("Received participants list:", list);
+    setParticipants(list);
+  });
+
   // New poll started
   socket.on("new_poll", (data) => {
     setCanCreatePoll(false);

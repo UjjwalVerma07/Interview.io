@@ -16,7 +16,7 @@ function handleSocketEvents(io, socket) {
       io.emit('participants_list', participants);
     }
 
-    if (currentPoll) {
+    if (currentPoll && Date.now() - currentPoll.startTime < currentPoll.timer * 1000) {
       socket.emit('new_poll', currentPoll);
     }
   });
@@ -50,11 +50,13 @@ socket.on('join_teacher', () => {
 
   // Teacher creates a new poll
   socket.on('create_poll', (pollData) => {
+     const startTime = Date.now();
     currentPoll = {
       question: pollData.question,
       options: pollData.options,
       correctOption: pollData.correctOption,
-      timer: pollData.timer || 60,
+      timer: Number(pollData.timer) || 60,
+      startTime,
     };
 
     answers = {};
@@ -77,6 +79,7 @@ socket.on('join_teacher', () => {
 
   io.emit('poll_complete');
   io.emit('live_results', result);
+  currentPoll=null
 }, currentPoll.timer * 1000);
 
   });
